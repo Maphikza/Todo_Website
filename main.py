@@ -4,6 +4,7 @@ import os
 from datetime import datetime
 import uuid
 
+# Setting up database and configuring Flask app.
 db = SQLAlchemy()
 app = Flask(__name__)
 app.config["SECRET_KEY"] = os.environ.get("FLASK_KEY_APP")
@@ -12,6 +13,7 @@ app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 db.init_app(app)
 
 
+# Creating database table.
 class Todos(db.Model):
     __tablename__ = "todos"
     id = db.Column(db.Integer, primary_key=True)
@@ -27,12 +29,14 @@ month = datetime.now().month
 day = datetime.now().day
 
 
+# My home page.
 @app.route('/', methods=["GET", "POST"])
 def home():
     todo_list = db.session.query(Todos.todo_item, Todos.item_id, Todos.id).all()
     return render_template("index.html", year=year, month=month, day=day, todo_list=todo_list)
 
 
+# page for adding items.
 @app.route('/add', methods=["GET", "POST"])
 def add_todo():
     if request.method == "POST":
@@ -45,9 +49,9 @@ def add_todo():
     return render_template("add.html")
 
 
+# page for deleting added items.
 @app.route("/delete/<todo_id>")
 def delete_todo(todo_id):
-
     todo_item_to_delete = Todos.query.get(todo_id)
     db.session.delete(todo_item_to_delete)
     db.session.commit()
