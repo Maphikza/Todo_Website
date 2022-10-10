@@ -1,0 +1,20 @@
+.main-title{
+    color: #20C20E;
+}
+
+.main-page{
+    background-color: black;
+    padding-top: 2rem;
+    height: 62rem;
+
+}
+.add-button{
+    padding-top: 1rem;
+    padding-bottom: 2rem;
+
+}
+
+.todo-items{
+    color: #20C20E;
+    padding-right: 1rem;
+}
